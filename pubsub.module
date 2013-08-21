@@ -1,0 +1,61 @@
+<?php
+
+/**
+ * @file
+ * Variable integration for the Publications Subscription module.
+ */
+
+
+/**
+ * Implements hook_help().
+ */
+function pubsub_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#pubsub':
+      return t('Yataaa');
+      break;
+  }
+}
+
+/**
+ * Implements hook_schema().
+ */
+function pubsub_schema() {
+  $schema = array();
+
+  $schema['pubsub'] = array(
+    'description' => t('Store subscribers email'),
+    'fields' => array(
+      'mid' => array('type' => 'int', 'unsigned' => TRUE, 'not_null' => TRUE, 'default' => 0 ),
+      'email' => array('type' => 'varchar', 'size' => 100, 'not_null' => TRUE, 'default' => ''),
+      'primary_key' => array('mid'),
+    ),
+  );
+
+  //hook_schema_item_cache
+
+  //hook_schema_item
+
+  return $schema;
+}
+
+/**
+ * Implements hook_install().
+ */
+function pubsub_install() {
+  // création des tables dans la BDD
+  // db_update
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function pubsub_uninstall() {
+  // suppression des tables installés? à voir
+}
+
+//hook_variable_type_info
+
+//hook_variable_group_info
+
+//hook_variable_info
