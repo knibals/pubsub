@@ -12,29 +12,45 @@
 function pubsub_help($path, $arg) {
   switch ($path) {
     case 'admin/help#pubsub':
-      return t('Yataaa');
+      print t('Yataaa');
       break;
   }
 }
 
 /**
  * Implements hook_schema().
+ *
+ * Schema Reference: https://drupal.org/node/146939
+ * Data types: https://drupal.org/node/159605
+ *
  */
 function pubsub_schema() {
+  // @TODO: Vérifier si la table existe dans la BDD
   $schema = array();
 
   $schema['pubsub'] = array(
     'description' => t('Store subscribers email'),
     'fields' => array(
-      'mid' => array('type' => 'int', 'unsigned' => TRUE, 'not_null' => TRUE, 'default' => 0 ),
-      'email' => array('type' => 'varchar', 'size' => 100, 'not_null' => TRUE, 'default' => ''),
-      'primary_key' => array('mid'),
+      'emid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not_null' => TRUE
+      ),
+      'email_address' => array(
+        'type' => 'varchar',
+        'length' => 80,
+        'not_null' => TRUE
+      ),
+      'created_at' => array(
+        //'type' => 'int',
+        'mysql_type' => 'DATETIME',
+        'pgsql_type' => 'timestamp without time zone',
+        'not_null' => TRUE
+      ),
     ),
+    'unique keys' => array( 'name' => array('email_address')),
+    'primary key' => array('emid'),
   );
-
-  //hook_schema_item_cache
-
-  //hook_schema_item
 
   return $schema;
 }
@@ -43,19 +59,12 @@ function pubsub_schema() {
  * Implements hook_install().
  */
 function pubsub_install() {
-  // création des tables dans la BDD
-  // db_update
 }
 
 /**
  * Implements hook_uninstall().
  */
 function pubsub_uninstall() {
-  // suppression des tables installés? à voir
+  //@TODO suppression des tables installés?
 }
 
-//hook_variable_type_info
-
-//hook_variable_group_info
-
-//hook_variable_info
